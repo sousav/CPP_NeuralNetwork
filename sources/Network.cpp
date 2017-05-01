@@ -5,40 +5,25 @@
 // Login   <sousa_v@epitech.eu>
 //
 // Started on  Sun Apr 23 19:21:31 2017 Sousa Victor
-// Last update Mon May  1 23:30:42 2017 Sousa Victor
+// Last update Tue May  2 01:15:03 2017 Sousa Victor
 //
 
 #include "Network.hpp"
 
-Neural::Network::Network(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor) {
-    this->_recentAverageSmoothingFactor = recentAverageSmoothingFactor;
-    unsigned numLayers = topology.size();
-    for (unsigned layerNum = 0; layerNum < numLayers; ++layerNum) {
-        this->_layers.push_back(Layer());
-        unsigned numOutputs = layerNum == topology.size() - 1 ? 0 : topology[layerNum + 1];
+Neural::Network::Network(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor): ANetworkData(topology, recentAverageSmoothingFactor) {
 
-        // We have a new layer, now fill it with neurons
-        for (unsigned neuronNum = 0; neuronNum <= topology[layerNum]; ++neuronNum) {
-            this->_layers.back().push_back(Neuron(numOutputs, neuronNum));
-        }
-        this->_layers.back().back().setOutputVal(1.0); //bias neuron
-    }
 }
 
 Neural::Network::~Network() {
 
 }
 
-Neural::Network::Network(const Neural::Network &network) {
-    this->_layers = network._layers;
-    this->_error = network._error;
-    this->_recentAverageError = network._recentAverageError;
+Neural::Network::Network(const Neural::Network &network) : ANetworkData(network) {
+
 }
 
 Neural::Network &Neural::Network::operator=(const Neural::Network &network) {
-    this->_layers = network._layers;
-    this->_error = network._error;
-    this->_recentAverageError = network._recentAverageError;
+    Neural::ANetworkData::operator=(network);
     return *this;
 }
 
@@ -139,46 +124,6 @@ void Neural::Network::backProp(const std::vector<double> &targetVals) {
     }
 }
 
-double Neural::Network::getRecentAverageError(void) const {
-    return this->_recentAverageError;
-}
-
-std::vector<Neural::Layer> const & Neural::Network::getLayer() const {
-    return this->_layers;
-}
-
-unsigned Neural::Network::getLayerCount() const {
-    return this->_layers.size();
-}
-
-unsigned Neural::Network::getInputCount() const {
-    return (this->_layers.size() == 0 ? 0 : this->_layers.front().size() - 1);
-}
-
-unsigned Neural::Network::getOutputCount() const {
-    return (this->_layers.size() == 0 ? 0 : this->_layers.back().size() - 1);
-}
-
-unsigned Neural::Network::getNeuronCount() const {
-    unsigned total = 0;
-
-    for (auto const &layer: this->_layers) {
-        total += layer.size();
-    }
-    return total;
-}
-
-unsigned Neural::Network::getConnectionCount() const {
-    unsigned total = 0;
-
-    for (auto const &layer: this->_layers) {
-        for (auto const &neuron: layer) {
-            total += neuron.getConnectionCount();
-        }
-    }
-    return total;
-}
-
 void Neural::Network::showVectorVals(std::string const &label, std::vector<double> const &v) const {
     std::cout << label << " ";
     for (unsigned i = 0; i < v.size(); ++i) {
@@ -187,7 +132,7 @@ void Neural::Network::showVectorVals(std::string const &label, std::vector<doubl
     std::cout << std::endl;
 }
 
-std::ostream &operator<<(std::ostream& os, const Neural::INetwork &network) {
+std::ostream &operator<<(std::ostream& os, const Neural::Network &network) {
     os << std::endl << "|------------- NETWORK INFO -------------|" << std::endl;
     std::vector<Neural::Layer> const layers = network.getLayer();
     os << "\tNetwork has " << network.getLayerCount() << " layer" << (network.getLayerCount() > 1 ? "s" : "") << std::endl;

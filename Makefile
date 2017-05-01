@@ -5,7 +5,7 @@
 ## Login   <sousa_v@epitech.net>
 ##
 ## Started on  Mon Mar 13 22:42:09 2017 Victor Sousa
-## Last update Mon May  1 00:22:28 2017 Sousa Victor
+## Last update Tue May  2 01:06:30 2017 Sousa Victor
 ##
 
 CPP		=	g++
@@ -24,9 +24,11 @@ LDFLAGS		+=	-lm
 SRCSDIR		=	sources
 
 SRCS		=	$(SRCSDIR)/main.cpp	\
-		$(SRCSDIR)/TrainingData.cpp	\
 		$(SRCSDIR)/Network.cpp	\
-		$(SRCSDIR)/Neuron.cpp
+		$(SRCSDIR)/ANetworkData.cpp	\
+		$(SRCSDIR)/Neuron.cpp	\
+		$(SRCSDIR)/NetworkTrainer.cpp
+
 OBJS		=	$(SRCS:.cpp=.o)
 
 GENSRCS		=	$(SRCSDIR)/generator.cpp
