@@ -5,7 +5,7 @@
 // Login   <sousa_v@epitech.eu>
 //
 // Started on  Sun Apr 23 19:09:13 2017 Sousa Victor
-// Last update Mon May  1 22:03:29 2017 Sousa Victor
+// Last update Tue May  2 02:36:11 2017 Sousa Victor
 //
 
 #ifndef NEURON_HPP
@@ -35,6 +35,7 @@ namespace Neural {
         virtual void calcHiddenGradients(const Neural::Layer &nextLayer) = 0;
         virtual void updateInputWeights(Neural::Layer &prevLayer) = 0;
 
+        virtual void setConnection(unsigned index, Connection const &data) = 0;
         virtual std::vector<Connection> const &getConnection() const = 0;
         virtual unsigned getConnectionCount() const = 0;
 
@@ -56,6 +57,7 @@ namespace Neural {
         void calcHiddenGradients(const Neural::Layer &nextLayer);
         void updateInputWeights(Neural::Layer &prevLayer);
 
+        void setConnection(unsigned index, Connection const &data);
         std::vector<Connection> const &getConnection() const;
         unsigned getConnectionCount() const;
 

@@ -5,7 +5,7 @@
 // Login   <sousa_v@epitech.eu>
 //
 // Started on  Sun Apr 23 19:03:38 2017 Sousa Victor
-// Last update Mon May  1 23:28:23 2017 Sousa Victor
+// Last update Tue May  2 02:02:32 2017 Sousa Victor
 //
 
 #include "NetworkTrainer.hpp"
@@ -30,7 +30,7 @@ Neural::NetworkTrainer::NetworkTrainer(const std::string filename) {
         }
         file.close();
     } else {
-        throw Neural::InvalidTrainingFile("You training file " + filename + " could not be found");
+        throw Neural::InvalidTrainingFile("Your training file " + filename + " could not be found");
     }
 }
 

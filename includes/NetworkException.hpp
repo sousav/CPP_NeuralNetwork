@@ -5,7 +5,7 @@
 // Login   <sousa_v@epitech.eu>
 //
 // Started on  Mon May  1 02:36:39 2017 Sousa Victor
-// Last update Mon May  1 22:37:56 2017 Sousa Victor
+// Last update Tue May  2 01:50:26 2017 Sousa Victor
 //
 
 #ifndef NETWORKEXCEPTION
@@ -42,6 +42,14 @@ namespace Neural {
         public:
             InvalidTrainingFile(std::string const &message): NetworkException(message) {};
             virtual ~InvalidTrainingFile() throw() {};
+
+    };
+
+    class InvalidSavingFile : public NetworkException {
+
+        public:
+            InvalidSavingFile(std::string const &message): NetworkException(message) {};
+            virtual ~InvalidSavingFile() throw() {};
 
     };
 

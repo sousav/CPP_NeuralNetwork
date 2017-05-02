@@ -5,7 +5,7 @@
 // Login   <sousa_v@epitech.eu>
 //
 // Started on  Sun Apr 23 19:12:47 2017 Sousa Victor
-// Last update Mon May  1 22:05:46 2017 Sousa Victor
+// Last update Tue May  2 02:37:26 2017 Sousa Victor
 //
 
 #include "Neuron.hpp"
@@ -97,6 +97,11 @@ void Neural::Neuron::updateInputWeights(Layer &prevLayer) {
 
 std::vector<Neural::INeuron::Connection> const &Neural::Neuron::getConnection() const {
     return this->_outputWeights;
+}
+
+void Neural::Neuron::setConnection(unsigned index, Neural::INeuron::Connection const &data) {
+    this->_outputWeights[index].weight = data.weight;
+    this->_outputWeights[index].deltaWeight = data.deltaWeight;
 }
 
 unsigned Neural::Neuron::getConnectionCount() const {
