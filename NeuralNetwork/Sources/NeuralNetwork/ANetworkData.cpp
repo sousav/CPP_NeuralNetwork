@@ -1,12 +1,11 @@
-//
-// ANetworkData.cpp for  in /Users/vicostudio/Documents/Shared Folder/Work/NeuralNetwork/CPP_NeuralNetwork/sources/
-//
-// Made by Sousa Victor
-// Login   <sousa_v@epitech.eu>
-//
-// Started on  Tue May  2 01:03:08 2017 Sousa Victor
-// Last update Tue May  2 02:39:13 2017 Sousa Victor
-//
+/**
+ * @Author: Victor Sousa <vicostudio>
+ * @Date:   29/04/2018 20:10:29
+ * @Email:  victor.sousa@epitech.eu
+ * @Last modified by:   vicostudio
+ * @Last modified time: 29/04/2018 20:27:50
+ */
+
 
 #include "ANetworkData.hpp"
 

@@ -1,12 +1,11 @@
-//
-// Neuron.cpp for  in /Users/vicostudio/Documents/Shared Folder/Work/NeuralNetwork/CPP/BasicNeural/sources/
-//
-// Made by Sousa Victor
-// Login   <sousa_v@epitech.eu>
-//
-// Started on  Sun Apr 23 19:12:47 2017 Sousa Victor
-// Last update Tue May  2 02:37:26 2017 Sousa Victor
-//
+/**
+ * @Author: Victor Sousa <vicostudio>
+ * @Date:   29/04/2018 20:10:29
+ * @Email:  victor.sousa@epitech.eu
+ * @Last modified by:   vicostudio
+ * @Last modified time: 29/04/2018 20:28:03
+ */
+
 
 #include "Neuron.hpp"
 

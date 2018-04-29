@@ -1,12 +1,11 @@
-//
-// Network.hpp for  in /Users/vicostudio/Documents/Shared Folder/Work/NeuralNetwork/CPP/BasicNeural/includes/
-//
-// Made by Sousa Victor
-// Login   <sousa_v@epitech.eu>
-//
-// Started on  Sun Apr 23 19:19:17 2017 Sousa Victor
-// Last update Tue May  2 01:04:04 2017 Sousa Victor
-//
+/**
+ * @Author: Victor Sousa <vicostudio>
+ * @Date:   29/04/2018 20:10:29
+ * @Email:  victor.sousa@epitech.eu
+ * @Last modified by:   vicostudio
+ * @Last modified time: 29/04/2018 20:27:22
+ */
+
 
 #ifndef NETWORK_HPP_
 #define NETWORK_HPP_
@@ -46,7 +45,7 @@ namespace Neural {
         void feedForward(const std::vector<double> &inputVals);
         std::vector<double> const getResults() const;
         void backProp(const std::vector<double> &targetVals);
-        
+
     private:
         double _error;
         void showVectorVals(std::string const &label, std::vector<double> const &v) const;

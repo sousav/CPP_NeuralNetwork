@@ -1,12 +1,11 @@
-//
-// TrainingData.hpp for  in /Users/vicostudio/Documents/Shared Folder/Work/NeuralNetwork/CPP/BasicNeural/includes/
-//
-// Made by Sousa Victor
-// Login   <sousa_v@epitech.eu>
-//
-// Started on  Sun Apr 23 18:58:05 2017 Sousa Victor
-// Last update Mon May  1 23:27:37 2017 Sousa Victor
-//
+/**
+ * @Author: Victor Sousa <vicostudio>
+ * @Date:   29/04/2018 20:10:29
+ * @Email:  victor.sousa@epitech.eu
+ * @Last modified by:   vicostudio
+ * @Last modified time: 29/04/2018 20:27:31
+ */
+
 
 #ifndef TRAININGDATA_HPP_
 #define TRAININGDATA_HPP_
