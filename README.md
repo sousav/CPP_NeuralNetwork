@@ -1,5 +1,5 @@
-# Welcome to [CPP_NeuralNetwork](https://github.com/sousav/CPP_NeuralNetwork/)!
-## A simple c++ NeuralNetwork
+# Welcome to [DeepNetwork](https://github.com/sousav/DeepNetwork/)!
+## A simple c++ DeepNeuralNetwork library
 
 This project contains a basic Neural Network source code.
 Which allow you to train, save and load a previously trained neural network.
