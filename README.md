@@ -3,7 +3,6 @@
 
 This project contains a basic Neural Network source code.
 Which allow you to train, save and load a previously trained neural network.
-It also contains a basic dataset generator for AND, OR and XOR gate.
 
 # How to build
 
@@ -13,8 +12,7 @@ git clone https://github.com/sousav/CPP_NeuralNetwork
 cd CPP_NeuralNetwork
 mkdir build && cd build
 cmake .. && make
-./Generator/Generator -h
-./NeuralNetwork/NeuralNetwork -h
+./DeepNetworkTest -h
 ```
 
 # Used library
