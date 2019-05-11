@@ -27,8 +27,11 @@ namespace Neural {
         virtual ~INetwork() {};
 
         virtual void train(INetworkTrainer const &trainer) = 0;
+
         virtual void feedForward(const std::vector<double> &inputVals) = 0;
+
         virtual std::vector<double> const getResults() const = 0;
+
         virtual void backProp(const std::vector<double> &targetVals) = 0;
 
     };
@@ -37,24 +40,31 @@ namespace Neural {
 
     public:
         Network(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor = 100);
+
         ~Network();
+
         Network(const Network &network);
-        Network &operator =(const Network &network);
+
+        Network &operator=(const Network &network);
 
         void train(INetworkTrainer const &trainer);
+
         void feedForward(const std::vector<double> &inputVals);
+
         std::vector<double> const getResults() const;
+
         void backProp(const std::vector<double> &targetVals);
 
     private:
         double _error;
+
         void showVectorVals(std::string const &label, std::vector<double> const &v) const;
 
     };
 
 }
 
-std::ostream &operator<<(std::ostream& os, const Neural::Network &network);
+std::ostream &operator<<(std::ostream &os, const Neural::Network &network);
 
 #else
 

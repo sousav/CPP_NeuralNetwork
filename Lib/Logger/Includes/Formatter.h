@@ -27,40 +27,42 @@ namespace Log {
  *  A typical use case is to format a std::exception string message :
  * - throw std::runtime_error(Formatter() << "no value for key '" << apKey << "'");
  */
-class Formatter {
-public:
-    /// @brief Constructor
-    Formatter(void)    {}
-    /// @brief Non virtual destructor
-    ~Formatter(void)   {}
+    class Formatter {
+    public:
+        /// @brief Constructor
+        Formatter(void) {}
 
-    /**
-     * @brief stream inserter operator
-     *
-     * @param[in] aValue    Value to be formatted and inserted into the string stream
-     *
-     * @return Current Formatter instance
-     */
-    template <typename T>
-    Formatter& operator<< (const T& aValue) {
-        mStream << aValue;
-        return (*this);
-    }
+        /// @brief Non virtual destructor
+        ~Formatter(void) {}
 
-    /// @brief std::string cast operator for implicit conversion
-    inline operator std::string() const {
-        return mStream.str();
-    }
+        /**
+         * @brief stream inserter operator
+         *
+         * @param[in] aValue    Value to be formatted and inserted into the string stream
+         *
+         * @return Current Formatter instance
+         */
+        template<typename T>
+        Formatter &operator<<(const T &aValue) {
+            mStream << aValue;
+            return (*this);
+        }
 
-private:
-    /// @{ Non-copyable object
-    Formatter(const Formatter&);
-    void operator=(const Formatter&);
-    /// @}
+        /// @brief std::string cast operator for implicit conversion
+        inline operator std::string() const {
+            return mStream.str();
+        }
 
-private:
-    std::ostringstream   mStream;    ///< The underlying string stream
-};
+    private:
+        /// @{ Non-copyable object
+        Formatter(const Formatter &);
+
+        void operator=(const Formatter &);
+        /// @}
+
+    private:
+        std::ostringstream mStream;    ///< The underlying string stream
+    };
 
 
 } // namespace Log

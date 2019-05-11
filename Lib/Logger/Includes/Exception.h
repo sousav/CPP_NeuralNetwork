@@ -23,7 +23,6 @@
 #define LOGGER_ASSERT(expression) assert(expression)
 
 
-
 #ifdef _WIN32
 // Disable warning C4290: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
 #pragma warning(disable:4290)
@@ -36,17 +35,16 @@ namespace Log {
  * @brief   Encapsulation of an error message based on std::runtime_error.
  * @ingroup LoggerCpp
  */
-class Exception : public std::runtime_error {
-public:
-    /**
-     * @brief Encapsulation of an error message based on std::runtime_error.
-     *
-     * @param[in] aErrorMessage The string message describing the error
-     */
-    explicit Exception(const std::string& aErrorMessage) :
-        std::runtime_error(aErrorMessage)
-    {}
-};
+    class Exception : public std::runtime_error {
+    public:
+        /**
+         * @brief Encapsulation of an error message based on std::runtime_error.
+         *
+         * @param[in] aErrorMessage The string message describing the error
+         */
+        explicit Exception(const std::string &aErrorMessage) :
+                std::runtime_error(aErrorMessage) {}
+    };
 
 
 /// @brief Stringify 1/2 : convert an integer to a string (using the following macro)

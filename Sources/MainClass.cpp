@@ -9,7 +9,7 @@
 
 #include "MainClass.h"
 
-MainClass::MainClass(int argc, char *argv[]): AMain(argc, argv, "MainClass") {
+MainClass::MainClass(int argc, char *argv[]) : AMain(argc, argv, "MainClass") {
 
 }
 
@@ -19,10 +19,11 @@ MainClass::~MainClass() {
 
 
 ArgParser::parser MainClass::setupArgParser() const {
-    return ArgParser::parser {{
-                                      { "help", {"-h", "--help"}, "Shows this help message.\n", 0},
-                                      { "dataset", {"-d", "--dataset"}, KRED + "[required]" + KNRM + " Specify the path to the data set.\n", 1}
-                              }};
+    return ArgParser::parser{{
+                                     {"help", {"-h", "--help"}, "Shows this help message.\n", 0},
+                                     {"dataset", {"-d", "--dataset"},
+                                             KRED + "[required]" + KNRM + " Specify the path to the data set.\n", 1}
+                             }};
 }
 
 bool MainClass::Run(ArgParser::parser_results const &args) {
@@ -51,7 +52,9 @@ bool MainClass::checkArgument(ArgParser::parser_results const &args) const {
     }
 
     if (!args["dataset"]) {
-        ArgParser::fmt_ostream(std::cerr) << KRED + "\nYou must provide a path to a data set using -d or --dataset\n" + KNRM << std::endl << this->setupArgParser();
+        ArgParser::fmt_ostream(std::cerr)
+                << KRED + "\nYou must provide a path to a data set using -d or --dataset\n" + KNRM << std::endl
+                << this->setupArgParser();
         return false;
     }
 

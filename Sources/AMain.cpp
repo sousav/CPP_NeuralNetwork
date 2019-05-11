@@ -8,7 +8,7 @@
 
 #include "AMain.h"
 
-AMain::AMain(int argc, char *argv[], std::string const &className): AClass(className) {
+AMain::AMain(int argc, char *argv[], std::string const &className) : AClass(className) {
     this->_argc = argc;
     this->_argv = argv;
 }
@@ -24,7 +24,7 @@ bool AMain::Run() {
     ArgParser::parser_results args;
     try {
         args = parser.parse(this->_argc, this->_argv);
-    } catch (const std::exception& e) {
+    } catch (const std::exception &e) {
         this->logger.error() << e.what();
         return false;
     }

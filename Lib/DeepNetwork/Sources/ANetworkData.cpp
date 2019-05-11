@@ -32,7 +32,7 @@ Neural::ANetworkData::ANetworkData(const ANetworkData &data) {
     loadFrom(data);
 }
 
-Neural::ANetworkData &Neural::ANetworkData::operator =(const ANetworkData &data) {
+Neural::ANetworkData &Neural::ANetworkData::operator=(const ANetworkData &data) {
     loadFrom(data);
     return *this;
 }
@@ -48,8 +48,8 @@ void Neural::ANetworkData::loadFrom(const std::string &filepath) {
     std::ifstream file;
     file.open(filepath.c_str());
     if (file) {
-        std::vector<unsigned>topology = readTopology(file);
-        std::vector<double>error = readError(file);
+        std::vector<unsigned> topology = readTopology(file);
+        std::vector<double> error = readError(file);
         if (error.size() != 3)
             throw Neural::InvalidSavingFile("Your saving file " + filepath + " contains incorrect error information");
         ANetworkData newData(topology, error[2]);
@@ -72,7 +72,7 @@ void Neural::ANetworkData::loadFrom(const std::string &filepath) {
 }
 
 void Neural::ANetworkData::saveTo(const std::string &filepath) const {
-    std::ofstream       file;
+    std::ofstream file;
     file.open(filepath.c_str());
     if (!file)
         throw Neural::InvalidSavingFile("The file in which you are trying to save could not be created..");
@@ -81,7 +81,8 @@ void Neural::ANetworkData::saveTo(const std::string &filepath) const {
         file << " " << layer.size() - 1;
     }
     file << std::endl;
-    file << "error: " << this->_error << " " << this->_recentAverageError << " " << this->_recentAverageSmoothingFactor << std::endl;
+    file << "error: " << this->_error << " " << this->_recentAverageError << " " << this->_recentAverageSmoothingFactor
+         << std::endl;
 
     unsigned i = 0;
     for (auto const layer: this->_layers) {
@@ -92,7 +93,8 @@ void Neural::ANetworkData::saveTo(const std::string &filepath) const {
             std::vector<Neural::INeuron::Connection> connections = neuron.getConnection();
             unsigned k = 0;
             for (auto const &connection: connections) {
-                file << i << " " << j << " " << k << " " << connection.weight << " " << connection.deltaWeight << std::endl;
+                file << i << " " << j << " " << k << " " << connection.weight << " " << connection.deltaWeight
+                     << std::endl;
                 k++;
             }
             j++;
@@ -142,7 +144,8 @@ std::vector<double> Neural::ANetworkData::readError(std::ifstream &file) const {
     return error;
 }
 
-void Neural::ANetworkData::readNextNeuron(std::ifstream &file, std::vector<unsigned> &coord, Neural::INeuron::Connection &data) const {
+void Neural::ANetworkData::readNextNeuron(std::ifstream &file, std::vector<unsigned> &coord,
+                                          Neural::INeuron::Connection &data) const {
     std::string line;
 
     getline(file, line);
@@ -152,7 +155,8 @@ void Neural::ANetworkData::readNextNeuron(std::ifstream &file, std::vector<unsig
 
     for (int i = 0; i < 3; i++) {
         if (ss.eof())
-            throw Neural::InvalidTrainingFile("You training file does not contain enough informati for one of its neuron");
+            throw Neural::InvalidTrainingFile(
+                    "You training file does not contain enough informati for one of its neuron");
         unsigned n;
         ss >> n;
         coord.push_back(n);
@@ -169,7 +173,7 @@ double Neural::ANetworkData::getRecentAverageError(void) const {
     return this->_recentAverageError;
 }
 
-std::vector<Neural::Layer> const & Neural::ANetworkData::getLayer() const {
+std::vector<Neural::Layer> const &Neural::ANetworkData::getLayer() const {
     return this->_layers;
 }
 

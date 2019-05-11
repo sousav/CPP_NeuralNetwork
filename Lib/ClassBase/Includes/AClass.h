@@ -20,6 +20,7 @@ class AClass : public IClass {
 
 public:
     AClass(std::string const &className);
+
     virtual ~AClass();
 
     std::string const &getClassName() const;

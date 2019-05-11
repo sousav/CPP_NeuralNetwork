@@ -21,10 +21,12 @@ Neural::NetworkTrainer::NetworkTrainer(const std::string filename) {
             if (data.input.size() == 0)
                 break;
             if (file.eof())
-                throw Neural::InvalidTrainingFile("You training file is giving an input sample without specifying an output corresponding");
+                throw Neural::InvalidTrainingFile(
+                        "You training file is giving an input sample without specifying an output corresponding");
             data.output = readTargetOutputs(file);
             if (data.output.size() == 0)
-                throw Neural::InvalidTrainingFile("You training file is giving an input sample without specifying an output corresponding");
+                throw Neural::InvalidTrainingFile(
+                        "You training file is giving an input sample without specifying an output corresponding");
             this->_trainingData.push_back(data);
         }
         file.close();
@@ -42,7 +44,7 @@ Neural::NetworkTrainer::NetworkTrainer(const NetworkTrainer &trainer) {
     this->_trainingData = trainer._trainingData;
 }
 
-Neural::NetworkTrainer &Neural::NetworkTrainer::operator =(const NetworkTrainer &trainer) {
+Neural::NetworkTrainer &Neural::NetworkTrainer::operator=(const NetworkTrainer &trainer) {
     this->_topology = trainer._topology;
     this->_trainingData = trainer._trainingData;
     return *this;
@@ -94,7 +96,7 @@ std::vector<double> Neural::NetworkTrainer::readNextInputs(std::ifstream &file) 
     std::stringstream ss(line);
 
     std::string label;
-    ss>> label;
+    ss >> label;
     if (label.compare("in:") == 0) {
         double oneValue;
         while (ss >> oneValue) {
@@ -113,7 +115,7 @@ std::vector<double> Neural::NetworkTrainer::readTargetOutputs(std::ifstream &fil
     std::stringstream ss(line);
 
     std::string label;
-    ss>> label;
+    ss >> label;
     if (label.compare("out:") == 0) {
         double oneValue;
         while (ss >> oneValue) {

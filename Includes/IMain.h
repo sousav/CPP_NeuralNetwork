@@ -31,7 +31,9 @@ public:
 
 protected:
     virtual ArgParser::parser setupArgParser() const = 0;
+
     virtual bool Run() = 0;
+
     virtual bool Run(ArgParser::parser_results const &args) = 0;
 
 };

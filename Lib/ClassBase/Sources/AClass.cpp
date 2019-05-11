@@ -9,7 +9,7 @@
 
 #include "AClass.h"
 
-AClass::AClass(std::string const &className): logger(className.c_str()) {
+AClass::AClass(std::string const &className) : logger(className.c_str()) {
     static bool channelCreated = false;
     this->_className = className;
     if (!channelCreated) {

@@ -15,40 +15,45 @@
 namespace Neural {
 
     class NetworkException : public std::exception {
-        public:
-            NetworkException(std::string const &message) {
-                _message = message;
-            };
-            virtual ~NetworkException() throw() {};
-            virtual const char *what(void) const throw() {
-                return (this->_message.data());
-            }
+    public:
+        NetworkException(std::string const &message) {
+            _message = message;
+        };
 
-        private:
-            std::string _message;
+        virtual ~NetworkException() throw() {};
+
+        virtual const char *what(void) const throw() {
+            return (this->_message.data());
+        }
+
+    private:
+        std::string _message;
     };
 
     class InvalidInput : public NetworkException {
 
-        public:
-            InvalidInput(std::string const &message): NetworkException(message) {};
-            virtual ~InvalidInput() throw() {};
+    public:
+        InvalidInput(std::string const &message) : NetworkException(message) {};
+
+        virtual ~InvalidInput() throw() {};
 
     };
 
     class InvalidTrainingFile : public NetworkException {
 
-        public:
-            InvalidTrainingFile(std::string const &message): NetworkException(message) {};
-            virtual ~InvalidTrainingFile() throw() {};
+    public:
+        InvalidTrainingFile(std::string const &message) : NetworkException(message) {};
+
+        virtual ~InvalidTrainingFile() throw() {};
 
     };
 
     class InvalidSavingFile : public NetworkException {
 
-        public:
-            InvalidSavingFile(std::string const &message): NetworkException(message) {};
-            virtual ~InvalidSavingFile() throw() {};
+    public:
+        InvalidSavingFile(std::string const &message) : NetworkException(message) {};
+
+        virtual ~InvalidSavingFile() throw() {};
 
     };
 

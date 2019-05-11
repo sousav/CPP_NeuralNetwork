@@ -22,20 +22,31 @@ namespace Neural {
 
     public:
         ANetworkData(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor);
+
         ~ANetworkData();
+
         ANetworkData(const ANetworkData &data);
-        ANetworkData &operator =(const ANetworkData &data);
+
+        ANetworkData &operator=(const ANetworkData &data);
 
         virtual void loadFrom(const ANetworkData &data);
+
         virtual void loadFrom(const std::string &filepath);
+
         virtual void saveTo(const std::string &file) const;
 
         virtual double getRecentAverageError(void) const;
+
         virtual std::vector<Neural::Layer> const &getLayer() const;
+
         virtual unsigned getLayerCount() const;
+
         virtual unsigned getInputCount() const;
+
         virtual unsigned getOutputCount() const;
+
         virtual unsigned getNeuronCount() const;
+
         virtual unsigned getConnectionCount() const;
 
     protected:
@@ -46,7 +57,9 @@ namespace Neural {
 
     private:
         std::vector<unsigned> readTopology(std::ifstream &file) const;
+
         std::vector<double> readError(std::ifstream &file) const;
+
         void readNextNeuron(std::ifstream &file, std::vector<unsigned> &coord, Neural::INeuron::Connection &data) const;
 
     };

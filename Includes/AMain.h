@@ -13,13 +13,15 @@
 #include "IMain.h"
 #include "AClass.h"
 
-class AMain: public IMain, public AClass {
+class AMain : public IMain, public AClass {
 
 public:
     AMain(int argc, char *argv[], std::string const &className);
+
     virtual ~AMain();
 
     bool Run();
+
     virtual bool Run(ArgParser::parser_results const &args) = 0;
 
 protected:

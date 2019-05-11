@@ -23,62 +23,64 @@ namespace Log {
  * @brief   Output to the standard console using fprintf
  * @ingroup LoggerCpp
  */
-class OutputFile : public Output {
-public:
-    /**
-     * @brief Constructor : open the output file
-     *
-     * @param[in] aConfigPtr    Config the output file with "filename"
-     */
-    explicit OutputFile(const Config::Ptr& aConfigPtr);
+    class OutputFile : public Output {
+    public:
+        /**
+         * @brief Constructor : open the output file
+         *
+         * @param[in] aConfigPtr    Config the output file with "filename"
+         */
+        explicit OutputFile(const Config::Ptr &aConfigPtr);
 
-    /// @brief Destructor : close the file
-    virtual ~OutputFile();
+        /// @brief Destructor : close the file
+        virtual ~OutputFile();
 
-    /**
-     * @brief Output the Log to the standard console using fprintf
-     *
-     * @param[in] aChannelPtr   The underlying Channel of the Log
-     * @param[in] aLog          The Log to output
-     */
-    virtual void output(const Channel::Ptr& aChannelPtr, const Log& aLog) const;
+        /**
+         * @brief Output the Log to the standard console using fprintf
+         *
+         * @param[in] aChannelPtr   The underlying Channel of the Log
+         * @param[in] aLog          The Log to output
+         */
+        virtual void output(const Channel::Ptr &aChannelPtr, const Log &aLog) const;
 
-private:
-    /// @brief Open the log file
-    void open() const;
-    /// @brief Close the log file
-    void close() const;
-    /// @brief Rotate the log file : close, remove, rename, open
-    void rotate() const;
+    private:
+        /// @brief Open the log file
+        void open() const;
 
-private:
-    mutable FILE*   mpFile; ///< @brief File pointer (mutable to be modified in the const output method)
-    mutable long    mSize;  ///< @brief Current size of the log file (mutable to be modified in the const output method)
+        /// @brief Close the log file
+        void close() const;
 
-    /** 
-     * @brief "max_startup_size" : Size of the file above which to create a new file instead of appending to it (at startup).
-     *
-     * Default (0) creates a new file at each startup (never append to an existing one).
-    */
-    long        mMaxStartupSize;
+        /// @brief Rotate the log file : close, remove, rename, open
+        void rotate() const;
 
-    /** 
-     * @brief "max_size" : Size of the file above which to create a new file instead of appending to it (at runtime).
-     *
-     * Default (1024*1024=1Mo) creates a new file each time the current one grow above 1Mo.
-    */
-    long        mMaxSize;
+    private:
+        mutable FILE *mpFile; ///< @brief File pointer (mutable to be modified in the const output method)
+        mutable long mSize;  ///< @brief Current size of the log file (mutable to be modified in the const output method)
 
-    /**
-     * @brief "filename" : Name of the log file
-     */
-    std::string mFilename;
+        /**
+         * @brief "max_startup_size" : Size of the file above which to create a new file instead of appending to it (at startup).
+         *
+         * Default (0) creates a new file at each startup (never append to an existing one).
+        */
+        long mMaxStartupSize;
 
-    /**
-     * @brief "filename_old" : Name of the log file renamed after max_size is reach
-     */
-    std::string mFilenameOld;
-};
+        /**
+         * @brief "max_size" : Size of the file above which to create a new file instead of appending to it (at runtime).
+         *
+         * Default (1024*1024=1Mo) creates a new file each time the current one grow above 1Mo.
+        */
+        long mMaxSize;
+
+        /**
+         * @brief "filename" : Name of the log file
+         */
+        std::string mFilename;
+
+        /**
+         * @brief "filename_old" : Name of the log file renamed after max_size is reach
+         */
+        std::string mFilenameOld;
+    };
 
 
 } // namespace Log

@@ -19,47 +19,47 @@ namespace Log {
 
 
 // Constructor
-Config::Config(const char* apName) :
-    mName(apName) {
-}
+    Config::Config(const char *apName) :
+            mName(apName) {
+    }
 
 // Destructor
-Config::~Config(void) {
-}
+    Config::~Config(void) {
+    }
 
 // Get a string value
-const char* Config::get(const char* apKey, const char* apDefaultValue) const {
-    const char* pValue;
-    Config::Values::const_iterator iValue = mValues.find(apKey);
-    if (mValues.end() != iValue) {
-        pValue = iValue->second.c_str();
-    } else  {
-        pValue = apDefaultValue;
+    const char *Config::get(const char *apKey, const char *apDefaultValue) const {
+        const char *pValue;
+        Config::Values::const_iterator iValue = mValues.find(apKey);
+        if (mValues.end() != iValue) {
+            pValue = iValue->second.c_str();
+        } else {
+            pValue = apDefaultValue;
+        }
+        return pValue;
     }
-    return pValue;
-}
 
 // Get a string value
-long Config::get(const char* apKey, long aDefaultValue) const {
-    long value;
-    Config::Values::const_iterator iValue = mValues.find(apKey);
-    if (mValues.end() != iValue) {
-        value = atol(iValue->second.c_str());
-    } else  {
-        value = aDefaultValue;
+    long Config::get(const char *apKey, long aDefaultValue) const {
+        long value;
+        Config::Values::const_iterator iValue = mValues.find(apKey);
+        if (mValues.end() != iValue) {
+            value = atol(iValue->second.c_str());
+        } else {
+            value = aDefaultValue;
+        }
+        return value;
     }
-    return value;
-}
 
 // Create the Config for a new Output
-void Config::addOutput(Vector& aConfigList, const char* apOutputName) {
-    Log::Config::Ptr configPtr(new Log::Config(apOutputName));
-    aConfigList.push_back(configPtr);
-}
+    void Config::addOutput(Vector &aConfigList, const char *apOutputName) {
+        Log::Config::Ptr configPtr(new Log::Config(apOutputName));
+        aConfigList.push_back(configPtr);
+    }
 
 // Set an option for the last added Output
-void Config::setOption(Vector& aConfigList, const char* apKey, const char* apValue) {
-    (*aConfigList.back()).setValue(apKey, apValue);
-}
+    void Config::setOption(Vector &aConfigList, const char *apKey, const char *apValue) {
+        (*aConfigList.back()).setValue(apKey, apValue);
+    }
 
 } // namespace Log

@@ -19,57 +19,71 @@ namespace Log {
 
 
 // Construct a RAII (private) log object for the Logger class
-Log::Log(const Logger& aLogger, Level aSeverity) :
-    mLogger(aLogger),
-    mSeverity(aSeverity),
-    mpStream(nullptr) {
-    // Construct a stream only if the severity of the Log is above its Logger Log::Level
-    if (aSeverity >= aLogger.getLevel()) {
-        mpStream = new(std::ostringstream);
+    Log::Log(const Logger &aLogger, Level aSeverity) :
+            mLogger(aLogger),
+            mSeverity(aSeverity),
+            mpStream(nullptr) {
+        // Construct a stream only if the severity of the Log is above its Logger Log::Level
+        if (aSeverity >= aLogger.getLevel()) {
+            mpStream = new(std::ostringstream);
+        }
     }
-}
 
 // Destructor : output the Log string stream
-Log::~Log(void) {
-    if (nullptr != mpStream) {
-        mTime.make();
-        mLogger.output(*this);
+    Log::~Log(void) {
+        if (nullptr != mpStream) {
+            mTime.make();
+            mLogger.output(*this);
 
-        delete mpStream;
-        mpStream = nullptr;
+            delete mpStream;
+            mpStream = nullptr;
+        }
     }
-}
 
 // Convert a Level to its string representation
-const char* Log::toString(Log::Level aLevel) {
-    const char* pString = nullptr;
+    const char *Log::toString(Log::Level aLevel) {
+        const char *pString = nullptr;
 
-    switch (aLevel) {
-        case Log::eDebug:   pString = "DBUG"; break;
-        case Log::eInfo:    pString = "INFO"; break;
-        case Log::eNotice:  pString = "NOTE"; break;
-        case Log::eWarning: pString = "WARN"; break;
-        case Log::eError:   pString = "EROR"; break;
-        case Log::eCritic:  pString = "CRIT"; break;
-        default:            pString = "????"; break;
+        switch (aLevel) {
+            case Log::eDebug:
+                pString = "DBUG";
+                break;
+            case Log::eInfo:
+                pString = "INFO";
+                break;
+            case Log::eNotice:
+                pString = "NOTE";
+                break;
+            case Log::eWarning:
+                pString = "WARN";
+                break;
+            case Log::eError:
+                pString = "EROR";
+                break;
+            case Log::eCritic:
+                pString = "CRIT";
+                break;
+            default:
+                pString = "????";
+                break;
+        }
+
+        return pString;
     }
 
-    return pString;
-}
-
 // Convert a string representation of a Level to its corresponding value
-Log::Level Log::toLevel(const char* apLevel) {
-    Log::Level level;
+    Log::Level Log::toLevel(const char *apLevel) {
+        Log::Level level;
 
-    if      (0 == strncmp(apLevel, "DBUG", 4))  level = Log::eDebug;
-    else if (0 == strncmp(apLevel, "INFO", 4))  level = Log::eInfo;
-    else if (0 == strncmp(apLevel, "NOTE", 4))  level = Log::eNotice;
-    else if (0 == strncmp(apLevel, "WARN", 4))  level = Log::eWarning;
-    else if (0 == strncmp(apLevel, "EROR", 4))  level = Log::eError;
-    else /* (0 == strncmp(apLevel, "CRIT", 4)*/ level = Log::eCritic;   // NOLINT(whitespace/newline)
+        if (0 == strncmp(apLevel, "DBUG", 4)) level = Log::eDebug;
+        else if (0 == strncmp(apLevel, "INFO", 4)) level = Log::eInfo;
+        else if (0 == strncmp(apLevel, "NOTE", 4)) level = Log::eNotice;
+        else if (0 == strncmp(apLevel, "WARN", 4)) level = Log::eWarning;
+        else if (0 == strncmp(apLevel, "EROR", 4)) level = Log::eError;
+        else /* (0 == strncmp(apLevel, "CRIT", 4)*/ level = Log::eCritic;   // NOLINT(whitespace/newline)
 
-    return level;
-}
+        return level;
+    }
 
 
 } // namespace Log

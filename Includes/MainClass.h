@@ -24,10 +24,12 @@ class MainClass : public AMain {
 
 public:
     MainClass(int argc, char *argv[]);
+
     virtual ~MainClass();
 
 protected:
     virtual ArgParser::parser setupArgParser() const;
+
     virtual bool Run(ArgParser::parser_results const &args);
 
 private:

@@ -20,46 +20,58 @@
 
 namespace Neural {
 
-class INetworkTrainer {
+    class INetworkTrainer {
 
-public: struct TrainingData {
-        std::vector<double> input;
-        std::vector<double> output;
+    public:
+        struct TrainingData {
+            std::vector<double> input;
+            std::vector<double> output;
+        };
+
+    public:
+        ~INetworkTrainer() {};
+
+        virtual std::vector<unsigned> const &getTopology() const = 0;
+
+        virtual std::vector<Neural::INetworkTrainer::TrainingData> const &getTrainingData() const = 0;
+
+        virtual void setDebugFLag(bool mode) = 0;
+
+        virtual bool getDebugFLag() const = 0;
+
     };
 
-public:
-    ~INetworkTrainer() {};
+    class NetworkTrainer : public INetworkTrainer {
 
-    virtual std::vector<unsigned> const &getTopology() const = 0;
-    virtual std::vector<Neural::INetworkTrainer::TrainingData> const &getTrainingData() const = 0;
-    virtual void setDebugFLag(bool mode) = 0;
-    virtual bool getDebugFLag() const = 0;
+    public:
+        NetworkTrainer(const std::string filename);
 
-};
+        ~NetworkTrainer();
 
-class NetworkTrainer : public INetworkTrainer {
+        NetworkTrainer(const NetworkTrainer &trainer);
 
-public:
-    NetworkTrainer(const std::string filename);
-    ~NetworkTrainer();
-    NetworkTrainer(const NetworkTrainer &trainer);
-    NetworkTrainer &operator =(const NetworkTrainer &trainer);
+        NetworkTrainer &operator=(const NetworkTrainer &trainer);
 
-    std::vector<unsigned> const &getTopology() const;
-    std::vector<Neural::INetworkTrainer::TrainingData> const &getTrainingData() const;
-    void setDebugFLag(bool mode);
-    bool getDebugFLag() const;
+        std::vector<unsigned> const &getTopology() const;
 
-private:
-    bool _debug;
-    std::vector<unsigned> _topology;
-    std::vector<Neural::INetworkTrainer::TrainingData> _trainingData;
+        std::vector<Neural::INetworkTrainer::TrainingData> const &getTrainingData() const;
 
-    std::vector<unsigned> readTopology(std::ifstream &file) const;
-    std::vector<double> readNextInputs(std::ifstream &file) const;
-    std::vector<double> readTargetOutputs(std::ifstream &file) const;
+        void setDebugFLag(bool mode);
 
-};
+        bool getDebugFLag() const;
+
+    private:
+        bool _debug;
+        std::vector<unsigned> _topology;
+        std::vector<Neural::INetworkTrainer::TrainingData> _trainingData;
+
+        std::vector<unsigned> readTopology(std::ifstream &file) const;
+
+        std::vector<double> readNextInputs(std::ifstream &file) const;
+
+        std::vector<double> readTargetOutputs(std::ifstream &file) const;
+
+    };
 
 }
 

@@ -33,7 +33,7 @@ Neural::Neuron::Neuron(const Neural::Neuron &neuron) {
     this->_gradient = neuron._gradient;
 }
 
-Neural::Neuron &Neural::Neuron::operator =(const Neural::Neuron &neuron) {
+Neural::Neuron &Neural::Neuron::operator=(const Neural::Neuron &neuron) {
     this->_eta = neuron._eta;
     this->_alpha = neuron._alpha;
     this->_outputVal = neuron._outputVal;
@@ -58,7 +58,7 @@ void Neural::Neuron::feedForward(const Layer &prevLayer) {
     // Include the bias node from the previous layer.
     for (unsigned n = 0; n < prevLayer.size(); ++n) {
         sum += prevLayer[n].getOutputVal() *
-                prevLayer[n]._outputWeights[this->_myIndex].weight;
+               prevLayer[n]._outputWeights[this->_myIndex].weight;
     }
     this->_outputVal = Neural::Neuron::transferFunction(sum);
 }
@@ -87,7 +87,7 @@ void Neural::Neuron::updateInputWeights(Layer &prevLayer) {
                 * this->_gradient
                 // Also add momentum = a fraction of the previous delta weight;
                 + this->_alpha
-                * oldDeltaWeight;
+                  * oldDeltaWeight;
 
         neuron._outputWeights[this->_myIndex].deltaWeight = newDeltaWeight;
         neuron._outputWeights[this->_myIndex].weight += newDeltaWeight;
@@ -118,7 +118,7 @@ double Neural::Neuron::transferFunctionDerivative(double x) const {
 }
 
 double Neural::Neuron::randomWeight(void) const {
-     return rand() / double(RAND_MAX);
+    return rand() / double(RAND_MAX);
 }
 
 double Neural::Neuron::sumDOW(const Neural::Layer &nextLayer) const {

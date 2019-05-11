@@ -22,7 +22,7 @@ namespace Log {
 
 
 // forward declaration
-class Logger;
+    class Logger;
 
 
 /**
@@ -39,96 +39,97 @@ class Logger;
  * It contains all required information for further formating, printing and transmitting
  * by the Logger class.
  */
-class Log {
-    friend class Logger;
+    class Log {
+        friend class Logger;
 
-public:
-    /**
-     * @brief Enumeration of the severity levels
-     */
-    enum Level {
-        eDebug = 0,
-        eInfo,
-        eNotice,
-        eWarning,
-        eError,
-        eCritic
-    };
+    public:
+        /**
+         * @brief Enumeration of the severity levels
+         */
+        enum Level {
+            eDebug = 0,
+            eInfo,
+            eNotice,
+            eWarning,
+            eError,
+            eCritic
+        };
 
-public:
-    /**
-     * @brief stream inserter operator
-     *
-     * @param[in] aValue    Value to be formatted and inserted into the Log string stream
-     *
-     * @return Currents Log instance
-     */
-    template <typename T>
-    Log& operator<< (const T& aValue) {
-        if (nullptr != mpStream) {
-            *mpStream << aValue;
+    public:
+        /**
+         * @brief stream inserter operator
+         *
+         * @param[in] aValue    Value to be formatted and inserted into the Log string stream
+         *
+         * @return Currents Log instance
+         */
+        template<typename T>
+        Log &operator<<(const T &aValue) {
+            if (nullptr != mpStream) {
+                *mpStream << aValue;
+            }
+            return (*this);
         }
-        return (*this);
-    }
 
-    /**
-     * @brief Destructor : output the Log string stream
-     */
-    ~Log(void);
+        /**
+         * @brief Destructor : output the Log string stream
+         */
+        ~Log(void);
 
-    /// @brief Severity Level of this Log
-    inline Level getSeverity(void) const {
-        return mSeverity;
-    }
+        /// @brief Severity Level of this Log
+        inline Level getSeverity(void) const {
+            return mSeverity;
+        }
 
-    /// @brief Timestamp of this Log
-    inline const DateTime& getTime(void) const {
-        return mTime;
-    }
+        /// @brief Timestamp of this Log
+        inline const DateTime &getTime(void) const {
+            return mTime;
+        }
 
-    /// @brief The underlying string stream
-    inline const std::ostringstream& getStream(void) const {
-        return *mpStream;
-    }
+        /// @brief The underlying string stream
+        inline const std::ostringstream &getStream(void) const {
+            return *mpStream;
+        }
 
-    /**
-     * @brief Convert a Level to its string representation
-     *
-     * @param[in] aLevel Log severity Level to convert
-     *
-     * @return Severity Level description
-     */
-    static const char* toString(Log::Level aLevel);
+        /**
+         * @brief Convert a Level to its string representation
+         *
+         * @param[in] aLevel Log severity Level to convert
+         *
+         * @return Severity Level description
+         */
+        static const char *toString(Log::Level aLevel);
 
-    /**
-     * @brief Convert a string representation of a Level to its corresponding value
-     *
-     * @param[in] apLevel Log severity string Level
-     *
-     * @return Severity Level value
-     */
-    static Log::Level  toLevel(const char* apLevel);
+        /**
+         * @brief Convert a string representation of a Level to its corresponding value
+         *
+         * @param[in] apLevel Log severity string Level
+         *
+         * @return Severity Level value
+         */
+        static Log::Level toLevel(const char *apLevel);
 
-private:
-    /**
-     * @brief Construct a RAII (private) log object for the Logger class
-     *
-     * @param[in] aLogger   Reference to the parent Logger
-     * @param[in] aSeverity Severity of this Log
-     */
-    Log(const Logger& aLogger, Level aSeverity);
+    private:
+        /**
+         * @brief Construct a RAII (private) log object for the Logger class
+         *
+         * @param[in] aLogger   Reference to the parent Logger
+         * @param[in] aSeverity Severity of this Log
+         */
+        Log(const Logger &aLogger, Level aSeverity);
 
-    /// @{ Non-copyable object
-    Log(const Log&);
-    void operator=(const Log&);
-    /// @}
+        /// @{ Non-copyable object
+        Log(const Log &);
 
-private:
-    const Logger&       mLogger;    ///< Reference to the parent Logger
-    Level               mSeverity;  ///< Severity of this Log
-    DateTime            mTime;      ///< Timestamp of the output
-    std::ostringstream* mpStream;   ///< The underlying string stream
-};
+        void operator=(const Log &);
+        /// @}
+
+    private:
+        const Logger &mLogger;    ///< Reference to the parent Logger
+        Level mSeverity;  ///< Severity of this Log
+        DateTime mTime;      ///< Timestamp of the output
+        std::ostringstream *mpStream;   ///< The underlying string stream
+    };
 
 
 } // namespace Log

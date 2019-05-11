@@ -9,7 +9,8 @@
 
 #include "Network.hpp"
 
-Neural::Network::Network(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor): ANetworkData(topology, recentAverageSmoothingFactor) {
+Neural::Network::Network(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor) : ANetworkData(
+        topology, recentAverageSmoothingFactor) {
 
 }
 
@@ -42,7 +43,9 @@ void Neural::Network::train(INetworkTrainer const &trainer) {
             showVectorVals("Targets:", data.output);
         }
         if (data.output.size() != trainer.getTopology().back()) {
-            throw Neural::InvalidTrainingFile("Your are requesting " + std::to_string(data.output.size()) + " output data but your network can only output " + std::to_string(trainer.getTopology().back()) + "..");
+            throw Neural::InvalidTrainingFile("Your are requesting " + std::to_string(data.output.size()) +
+                                              " output data but your network can only output " +
+                                              std::to_string(trainer.getTopology().back()) + "..");
             return;
         }
         this->backProp(data.output);
@@ -57,7 +60,9 @@ void Neural::Network::train(INetworkTrainer const &trainer) {
 
 void Neural::Network::feedForward(const std::vector<double> &inputVals) {
     if (inputVals.size() != this->_layers[0].size() - 1) {
-        throw Neural::InvalidInput("You want to input " + std::to_string(inputVals.size()) + " values but your network can only accept " + std::to_string(this->_layers[0].size() - 1));
+        throw Neural::InvalidInput(
+                "You want to input " + std::to_string(inputVals.size()) + " values but your network can only accept " +
+                std::to_string(this->_layers[0].size() - 1));
     }
 
     // Assign (latch) the input values into the input neurons
@@ -96,7 +101,8 @@ void Neural::Network::backProp(const std::vector<double> &targetVals) {
     this->_error = sqrt(this->_error); // RMS
 
     // Implement a recent average measurement
-    this->_recentAverageError = (this->_recentAverageError * this->_recentAverageSmoothingFactor + this->_error) / (this->_recentAverageSmoothingFactor + 1.0);
+    this->_recentAverageError = (this->_recentAverageError * this->_recentAverageSmoothingFactor + this->_error) /
+                                (this->_recentAverageSmoothingFactor + 1.0);
 
     // Calculate output layer gradients
     for (unsigned n = 0; n < outputLayer.size() - 1; ++n) {
@@ -131,21 +137,27 @@ void Neural::Network::showVectorVals(std::string const &label, std::vector<doubl
     std::cout << std::endl;
 }
 
-std::ostream &operator<<(std::ostream& os, const Neural::Network &network) {
+std::ostream &operator<<(std::ostream &os, const Neural::Network &network) {
     os << std::endl << "|------------- NETWORK INFO -------------|" << std::endl;
     std::vector<Neural::Layer> const layers = network.getLayer();
-    os << "\tNetwork has " << network.getLayerCount() << " layer" << (network.getLayerCount() > 1 ? "s" : "") << std::endl;
-    os << "\tIt takes " << network.getInputCount() << " input" << (network.getInputCount() > 1 ? "s" : "") <<" and give in return " << network.getOutputCount() << " output" << (network.getOutputCount() > 1 ? "s" : "") << std::endl;
-    os << "\tIt has a total of " << network.getNeuronCount() << " neurons and " << network.getConnectionCount() << " connections" << std::endl;
+    os << "\tNetwork has " << network.getLayerCount() << " layer" << (network.getLayerCount() > 1 ? "s" : "")
+       << std::endl;
+    os << "\tIt takes " << network.getInputCount() << " input" << (network.getInputCount() > 1 ? "s" : "")
+       << " and give in return " << network.getOutputCount() << " output" << (network.getOutputCount() > 1 ? "s" : "")
+       << std::endl;
+    os << "\tIt has a total of " << network.getNeuronCount() << " neurons and " << network.getConnectionCount()
+       << " connections" << std::endl;
     os << "\tIts recent average error factor is " << network.getRecentAverageError() << std::endl;
     os << std::endl << "\t|--------- Layer Status ---------|" << std::endl;
     unsigned i = 0;
     for (auto const &layer: layers) {
-        os << "\t\tLayer " << i << (i == 0 ? ", Input layer" : i == layers.size() - 1 ? ", Output layer" : "") << ", " << layer.size() - 1 << " neuron" << (layer.size() - 1 > 1 ? "s" : "") << std::endl;
+        os << "\t\tLayer " << i << (i == 0 ? ", Input layer" : i == layers.size() - 1 ? ", Output layer" : "") << ", "
+           << layer.size() - 1 << " neuron" << (layer.size() - 1 > 1 ? "s" : "") << std::endl;
         unsigned j = 0;
         for (auto const &neuron: layer) {
             std::vector<Neural::INeuron::Connection> connections = neuron.getConnection();
-            os << "\t\t\tNeuron " << j << " with " << connections.size() << " connection" << (connections.size() > 1 ? "s" : "") << (j == layer.size() - 1 ? " (bias neuron)" : "") << std::endl;
+            os << "\t\t\tNeuron " << j << " with " << connections.size() << " connection"
+               << (connections.size() > 1 ? "s" : "") << (j == layer.size() - 1 ? " (bias neuron)" : "") << std::endl;
             unsigned k = 0;
             for (auto const &connection: connections) {
                 os << "\t\t\t\tConnection " << k << " with a weight of " << connection.weight << std::endl;
