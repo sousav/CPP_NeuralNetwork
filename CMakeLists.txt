@@ -31,6 +31,8 @@ if (NOT TARGET DeepNetwork)
     include_directories(${PROJECT_SOURCE_DIR}/Lib/DeepNetwork/Includes/)
 endif()
 
+include_directories(${PROJECT_SOURCE_DIR}/Lib/Eigen/)
+
 ## Setup the source files
 set(Sources
         ${PROJECT_SOURCE_DIR}/Sources/main.cpp
