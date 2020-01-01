@@ -14,6 +14,8 @@
 #include <vector>
 #include <cmath>
 
+#include <MatPlotLib/MatPlotLib.h>
+
 #include "NetworkException.hpp"
 #include "NetworkTrainer.hpp"
 #include "ANetworkData.hpp"
@@ -31,6 +33,8 @@ namespace Neural {
         virtual std::vector<double> const getResults() const = 0;
         virtual void backProp(const std::vector<double> &targetVals) = 0;
 
+        virtual void errorPlot() const = 0;
+
     };
 
     class Network : public INetwork, public ANetworkData {
@@ -46,8 +50,9 @@ namespace Neural {
         std::vector<double> const getResults() const;
         void backProp(const std::vector<double> &targetVals);
 
+        void errorPlot() const;
+
     private:
-        double _error;
         void showVectorVals(std::string const &label, std::vector<double> const &v) const;
 
     };

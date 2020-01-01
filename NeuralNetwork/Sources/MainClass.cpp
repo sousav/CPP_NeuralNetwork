@@ -41,6 +41,8 @@ bool MainClass::Run(ArgParser::parser_results const &args) {
     //Neural::Network network2(std::vector<unsigned> {});
     //network2.loadFrom("./samples_save/or_gate.txt");
 
+    network.errorPlot();
+
     return true;
 }
 

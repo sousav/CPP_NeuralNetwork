@@ -41,6 +41,7 @@ namespace Neural {
     protected:
         std::vector<Layer> _layers; // _layers[layerNum][neuronNum]
         double _error;
+        std::vector<double> _errorHistory;
         double _recentAverageError;
         double _recentAverageSmoothingFactor;
 

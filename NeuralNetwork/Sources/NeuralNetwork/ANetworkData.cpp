@@ -10,10 +10,11 @@
 #include "ANetworkData.hpp"
 
 Neural::ANetworkData::ANetworkData(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor) {
+    this->_recentAverageError = 1;
     this->_recentAverageSmoothingFactor = recentAverageSmoothingFactor;
     unsigned numLayers = topology.size();
     for (unsigned layerNum = 0; layerNum < numLayers; ++layerNum) {
-        this->_layers.push_back(Layer());
+        this->_layers.emplace_back();
         unsigned numOutputs = layerNum == topology.size() - 1 ? 0 : topology[layerNum + 1];
 
         // We have a new layer, now fill it with neurons
@@ -58,9 +59,9 @@ void Neural::ANetworkData::loadFrom(const std::string &filepath) {
         *this = newData;
         while (!file.eof()) {
             std::vector<unsigned> coord;
-            Neural::INeuron::Connection data;
+            Neural::INeuron::Connection data{};
             readNextNeuron(file, coord, data);
-            if (coord.size() == 0)
+            if (coord.empty())
                 break;
             this->_layers[coord[0]][coord[1]].setConnection(coord[2], data);
         }
@@ -77,18 +78,18 @@ void Neural::ANetworkData::saveTo(const std::string &filepath) const {
     if (!file)
         throw Neural::InvalidSavingFile("The file in which you are trying to save could not be created..");
     file << "topology:";
-    for (auto const layer: this->_layers) {
+    for (auto const& layer: this->_layers) {
         file << " " << layer.size() - 1;
     }
     file << std::endl;
     file << "error: " << this->_error << " " << this->_recentAverageError << " " << this->_recentAverageSmoothingFactor << std::endl;
 
     unsigned i = 0;
-    for (auto const layer: this->_layers) {
+    for (auto const& layer: this->_layers) {
         if (i == this->_layers.size() - 1)
             break;
         int j = 0;
-        for (auto const neuron: layer) {
+        for (auto const& neuron: layer) {
             std::vector<Neural::INeuron::Connection> connections = neuron.getConnection();
             unsigned k = 0;
             for (auto const &connection: connections) {
@@ -110,7 +111,7 @@ std::vector<unsigned> Neural::ANetworkData::readTopology(std::ifstream &file) co
     getline(file, line);
     std::stringstream ss(line);
     ss >> label;
-    if (file.eof() || label.compare("topology:") != 0) {
+    if (file.eof() || label != "topology:") {
         throw Neural::InvalidTrainingFile("You training file does not contain a topology brief");
     }
 
@@ -130,7 +131,7 @@ std::vector<double> Neural::ANetworkData::readError(std::ifstream &file) const {
     getline(file, line);
     std::stringstream ss(line);
     ss >> label;
-    if (file.eof() || label.compare("error:") != 0) {
+    if (file.eof() || label != "error:") {
         throw Neural::InvalidTrainingFile("You training file does not contain an error brief");
     }
 
@@ -152,16 +153,16 @@ void Neural::ANetworkData::readNextNeuron(std::ifstream &file, std::vector<unsig
 
     for (int i = 0; i < 3; i++) {
         if (ss.eof())
-            throw Neural::InvalidTrainingFile("You training file does not contain enough informati for one of its neuron");
+            throw Neural::InvalidTrainingFile("You training file does not contain enough information for one of its neuron");
         unsigned n;
         ss >> n;
         coord.push_back(n);
     }
     if (ss.eof())
-        throw Neural::InvalidTrainingFile("You training file does not contain enough informati for one of its neuron");
+        throw Neural::InvalidTrainingFile("You training file does not contain enough information for one of its neuron");
     ss >> data.weight;
     if (ss.eof())
-        throw Neural::InvalidTrainingFile("You training file does not contain enough informati for one of its neuron");
+        throw Neural::InvalidTrainingFile("You training file does not contain enough information for one of its neuron");
     ss >> data.deltaWeight;
 }
 
@@ -178,11 +179,11 @@ unsigned Neural::ANetworkData::getLayerCount() const {
 }
 
 unsigned Neural::ANetworkData::getInputCount() const {
-    return (this->_layers.size() == 0 ? 0 : this->_layers.front().size() - 1);
+    return (this->_layers.empty() ? 0 : this->_layers.front().size() - 1);
 }
 
 unsigned Neural::ANetworkData::getOutputCount() const {
-    return (this->_layers.size() == 0 ? 0 : this->_layers.back().size() - 1);
+    return (this->_layers.empty() ? 0 : this->_layers.back().size() - 1);
 }
 
 unsigned Neural::ANetworkData::getNeuronCount() const {

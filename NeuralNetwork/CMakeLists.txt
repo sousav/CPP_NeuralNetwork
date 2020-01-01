@@ -18,6 +18,7 @@ if (NOT TARGET ArgParser)
     include_directories(${PROJECT_SOURCE_DIR}/Lib/ArgParser/Includes/)
 endif()
 
+find_package(Python3 COMPONENTS Development NumPy)
 
 ## Setup the source files
 set(Sources
@@ -55,6 +56,9 @@ set(Sources
 include_directories(
         ${PROJECT_SOURCE_DIR}/Includes/
         ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork
+
+        ${Python3_INCLUDE_DIRS}
+        ${Python3_NumPy_INCLUDE_DIRS}
 )
 
 ## Setup link path
@@ -70,4 +74,7 @@ add_executable(${NAME} ${Sources})
 target_link_libraries(${NAME}
         Logger
         ArgParser
+
+        Python3::Python
+        Python3::NumPy
 )

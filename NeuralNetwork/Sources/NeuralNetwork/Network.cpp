@@ -95,8 +95,11 @@ void Neural::Network::backProp(const std::vector<double> &targetVals) {
     this->_error /= outputLayer.size() - 1; // get average error squared
     this->_error = sqrt(this->_error); // RMS
 
+
     // Implement a recent average measurement
     this->_recentAverageError = (this->_recentAverageError * this->_recentAverageSmoothingFactor + this->_error) / (this->_recentAverageSmoothingFactor + 1.0);
+
+    this->_errorHistory.push_back(this->_recentAverageError);
 
     // Calculate output layer gradients
     for (unsigned n = 0; n < outputLayer.size() - 1; ++n) {
@@ -129,6 +132,15 @@ void Neural::Network::showVectorVals(std::string const &label, std::vector<doubl
         std::cout << v[i] << " ";
     }
     std::cout << std::endl;
+}
+
+void Neural::Network::errorPlot() const {
+    plt::plot(this->_errorHistory);
+
+    plt::title("Error factor");
+    plt::legend();
+
+    plt::show();
 }
 
 std::ostream &operator<<(std::ostream& os, const Neural::Network &network) {
