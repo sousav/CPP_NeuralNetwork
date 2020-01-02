@@ -14,7 +14,7 @@
 #include <vector>
 #include <cmath>
 
-#include <MatPlotLib/MatPlotLib.h>
+#include <MatPlotLib.h>
 
 #include "NetworkException.hpp"
 #include "NetworkTrainer.hpp"
@@ -40,7 +40,7 @@ namespace Neural {
     class Network : public INetwork, public ANetworkData {
 
     public:
-        Network(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor = 100);
+        Network(double recentAverageSmoothingFactor = 100);
         ~Network();
         Network(const Network &network);
         Network &operator =(const Network &network);

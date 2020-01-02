@@ -5,7 +5,6 @@ project(${NAME})
 set(CMAKE_CXX_STANDARD 17)
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-
 ## Setup Logger library
 if (NOT TARGET Logger)
     add_subdirectory(${PROJECT_SOURCE_DIR}/Lib/Logger)
@@ -16,6 +15,12 @@ endif()
 if (NOT TARGET ArgParser)
     add_subdirectory(${PROJECT_SOURCE_DIR}/Lib/ArgParser)
     include_directories(${PROJECT_SOURCE_DIR}/Lib/ArgParser/Includes/)
+endif()
+
+## Setup Argument parsing library
+if (NOT TARGET DataFrame)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/Lib/DataFrame)
+    include_directories(${PROJECT_SOURCE_DIR}/Lib/DataFrame/Includes/)
 endif()
 
 find_package(Python3 COMPONENTS Development NumPy)
@@ -57,13 +62,18 @@ include_directories(
         ${PROJECT_SOURCE_DIR}/Includes/
         ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork
 
+        ${PROJECT_SOURCE_DIR}/Lib/ArgParser/Includes
+        ${PROJECT_SOURCE_DIR}/Lib/Logger/Includes
+        ${PROJECT_SOURCE_DIR}/Lib/MatPlotLib/Includes
+        ${PROJECT_SOURCE_DIR}/Lib/DataFrame/include
+
         ${Python3_INCLUDE_DIRS}
         ${Python3_NumPy_INCLUDE_DIRS}
 )
 
 ## Setup link path
 link_directories(
-        ${PROJECT_BINARY_DIR}/Lib/Logger/
+
 )
 
 ## Create executables
@@ -74,6 +84,7 @@ add_executable(${NAME} ${Sources})
 target_link_libraries(${NAME}
         Logger
         ArgParser
+        DataFrame
 
         Python3::Python
         Python3::NumPy

@@ -7,8 +7,8 @@
  * @Last modified time: 22/04/2018 03:31:12
  */
 
-#include <Logger/Manager.h>
-#include <Logger/Logger.h>
+#include <Manager.h>
+#include <Logger.h>
 #include <MainClass.h>
 
 #define PROJECT_NAME std::string("NeuralNetwork")

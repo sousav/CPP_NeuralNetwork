@@ -11,8 +11,8 @@
 #define ACLASS_H_
 
 #include <string>
+#include <Logger.h>
 #include "IClass.h"
-#include "Logger/Logger.h"
 
 class AClass : public IClass {
 

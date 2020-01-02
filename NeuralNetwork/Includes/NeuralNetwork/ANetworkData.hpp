@@ -21,7 +21,7 @@ namespace Neural {
     class ANetworkData {
 
     public:
-        ANetworkData(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor);
+        ANetworkData(double recentAverageSmoothingFactor);
         ~ANetworkData();
         ANetworkData(const ANetworkData &data);
         ANetworkData &operator =(const ANetworkData &data);

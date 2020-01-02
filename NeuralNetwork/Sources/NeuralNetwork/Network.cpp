@@ -9,7 +9,7 @@
 
 #include "Network.hpp"
 
-Neural::Network::Network(const std::vector<unsigned> &topology, double recentAverageSmoothingFactor): ANetworkData(topology, recentAverageSmoothingFactor) {
+Neural::Network::Network(double recentAverageSmoothingFactor): ANetworkData(recentAverageSmoothingFactor) {
 
 }
 

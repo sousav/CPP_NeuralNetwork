@@ -112,7 +112,7 @@ std::vector<unsigned> Neural::ANetworkData::readTopology(std::ifstream &file) co
     std::stringstream ss(line);
     ss >> label;
     if (file.eof() || label != "topology:") {
-        throw Neural::InvalidTrainingFile("You training file does not contain a topology brief");
+        throw Neural::InvalidTrainingFile("Your training file does not contain a topology brief");
     }
 
     while (!ss.eof()) {
@@ -132,7 +132,7 @@ std::vector<double> Neural::ANetworkData::readError(std::ifstream &file) const {
     std::stringstream ss(line);
     ss >> label;
     if (file.eof() || label != "error:") {
-        throw Neural::InvalidTrainingFile("You training file does not contain an error brief");
+        throw Neural::InvalidTrainingFile("Your training file does not contain an error brief");
     }
 
     while (!ss.eof()) {
@@ -153,16 +153,16 @@ void Neural::ANetworkData::readNextNeuron(std::ifstream &file, std::vector<unsig
 
     for (int i = 0; i < 3; i++) {
         if (ss.eof())
-            throw Neural::InvalidTrainingFile("You training file does not contain enough information for one of its neuron");
+            throw Neural::InvalidTrainingFile("Your training file does not contain enough information for one of its neuron");
         unsigned n;
         ss >> n;
         coord.push_back(n);
     }
     if (ss.eof())
-        throw Neural::InvalidTrainingFile("You training file does not contain enough information for one of its neuron");
+        throw Neural::InvalidTrainingFile("Your training file does not contain enough information for one of its neuron");
     ss >> data.weight;
     if (ss.eof())
-        throw Neural::InvalidTrainingFile("You training file does not contain enough information for one of its neuron");
+        throw Neural::InvalidTrainingFile("Your training file does not contain enough information for one of its neuron");
     ss >> data.deltaWeight;
 }
 

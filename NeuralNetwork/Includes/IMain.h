@@ -20,7 +20,7 @@
 #define KWHT  std::string("\x1B[37m")
 
 #include <iostream>
-#include <ArgParser/ArgParser.h>
+#include <ArgParser.h>
 
 class IMain {
 
