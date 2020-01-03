@@ -45,13 +45,13 @@ void Neural::Layer::updateConnectionWeights(Neural::Layer &prevLayer) {
     }
 }
 
-std::vector<double> const &Neural::Layer::getOutput() const {
+std::vector<double> const Neural::Layer::getOutput() const {
     std::vector<double> resultVals;
 
     for (auto &neuron: this->_neurons) {
         resultVals.push_back(neuron.getOutputVal());
     }
-    return std::move(resultVals);
+    return resultVals;
 }
 
 double Neural::Layer::sumOutput(unsigned index) const {

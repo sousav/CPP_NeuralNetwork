@@ -26,7 +26,7 @@ namespace Neural {
         void updateConnectionWeights(Layer &prevLayer);
         void forwardPropagate(Layer const &prevLayer);
 
-        std::vector<double> const &getOutput() const;
+        std::vector<double> const getOutput() const;
         double sumOutput(unsigned index) const;
 
         unsigned int size() const;

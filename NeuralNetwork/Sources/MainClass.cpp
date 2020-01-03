@@ -36,13 +36,19 @@ bool MainClass::Run(ArgParser::parser_results const &args) {
     //df.read(args["dataset"].as<const char *>(), hmdf::io_format::csv);
 
     Neural::Network network;
-    network << Neural::Layer(2) << Neural::Layer(4) << Neural::Layer(1);
+
+    network
+    << Neural::Layer(2)
+    << Neural::Layer(4)
+    << Neural::Layer(1);
+
+
     std::cout << network;
 
     Neural::NetworkTrainer trainer(args["dataset"].as<std::string>());
     network.train(trainer);
 
-    //network.errorPlot();
+    network.errorPlot();
 
     return true;
 }
