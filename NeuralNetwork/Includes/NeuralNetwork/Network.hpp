@@ -18,26 +18,12 @@
 
 #include "NetworkException.hpp"
 #include "NetworkTrainer.hpp"
-#include "ANetworkData.hpp"
+#include "ANetwork.hpp"
 #include "Layer.hpp"
 
 namespace Neural {
 
-    class INetwork {
-
-    public:
-        virtual ~INetwork() {};
-
-        virtual void train(INetworkTrainer const &trainer) = 0;
-        virtual void feedForward(const std::vector<double> &inputVals) = 0;
-        virtual std::vector<double> const getResults() const = 0;
-        virtual void backProp(const std::vector<double> &targetVals) = 0;
-
-        virtual void errorPlot() const = 0;
-
-    };
-
-    class Network : public INetwork, public ANetworkData {
+    class Network : public ANetwork {
 
     public:
         Network(double recentAverageSmoothingFactor = 100);
@@ -45,15 +31,14 @@ namespace Neural {
         Network(const Network &network);
         Network &operator =(const Network &network);
 
+        Neural::Network &operator<<(Layer layer);
+
         void train(INetworkTrainer const &trainer);
         void feedForward(const std::vector<double> &inputVals);
         std::vector<double> const getResults() const;
         void backProp(const std::vector<double> &targetVals);
 
         void errorPlot() const;
-
-    private:
-        void showVectorVals(std::string const &label, std::vector<double> const &v) const;
 
     };
 

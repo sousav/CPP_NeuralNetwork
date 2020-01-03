@@ -43,14 +43,16 @@ set(Sources
 
     ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork/NetworkException.hpp
 
-    ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork/ANetworkData.hpp
-    ${PROJECT_SOURCE_DIR}/Sources/NeuralNetwork/ANetworkData.cpp
+    ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork/INetwork.hpp
+    ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork/ANetwork.hpp
+    ${PROJECT_SOURCE_DIR}/Sources/NeuralNetwork/ANetwork.cpp
     ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork/Network.hpp
     ${PROJECT_SOURCE_DIR}/Sources/NeuralNetwork/Network.cpp
     ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork/NetworkTrainer.hpp
     ${PROJECT_SOURCE_DIR}/Sources/NeuralNetwork/NetworkTrainer.cpp
 
     ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork/Layer.hpp
+    ${PROJECT_SOURCE_DIR}/Sources/NeuralNetwork/Layer.cpp
     ${PROJECT_SOURCE_DIR}/Includes/NeuralNetwork/Neuron.hpp
     ${PROJECT_SOURCE_DIR}/Sources/NeuralNetwork/Neuron.cpp
 

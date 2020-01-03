@@ -13,6 +13,10 @@
 #include "AMain.h"
 #include "NetworkTrainer.hpp"
 #include "Network.hpp"
+#include "Layer.hpp"
+
+#include <DataFrame/DataFrame.h>
+typedef hmdf::StdDataFrame<unsigned long> PandasDF;
 
 class MainClass : public AMain {
 

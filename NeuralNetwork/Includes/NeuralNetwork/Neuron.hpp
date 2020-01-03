@@ -27,11 +27,11 @@ namespace Neural {
         };
 
     public:
-        ~INeuron() {};
+        virtual ~INeuron() {};
 
         virtual void feedForward(const Neural::Layer &prevLayer) = 0;
-        virtual void calcOutputGradients(double targetVal) = 0;
-        virtual void calcHiddenGradients(const Neural::Layer &nextLayer) = 0;
+        virtual void computeOutputGradient(double targetVal) = 0;
+        virtual void computeHiddenGradient(const Neural::Layer &nextLayer) = 0;
         virtual void updateInputWeights(Neural::Layer &prevLayer) = 0;
 
         virtual void setConnection(unsigned index, Connection const &data) = 0;
@@ -43,7 +43,7 @@ namespace Neural {
     class Neuron : private INeuron {
 
     public:
-        Neuron(unsigned numOutputs, unsigned myIndex, double eta = 0.15, double alpha = 0.5);
+        Neuron(unsigned myIndex, double eta = 0.15, double alpha = 0.5);
         ~Neuron();
         Neuron(const Neuron &neuron);
         Neuron &operator =(const Neuron &neuron);
@@ -52,10 +52,11 @@ namespace Neural {
         double getOutputVal(void) const;
 
         void feedForward(const Neural::Layer &prevLayer);
-        void calcOutputGradients(double targetVal);
-        void calcHiddenGradients(const Neural::Layer &nextLayer);
+        void computeOutputGradient(double targetVal);
+        void computeHiddenGradient(const Neural::Layer &nextLayer);
         void updateInputWeights(Neural::Layer &prevLayer);
 
+        void setOutputSize(unsigned size);
         void setConnection(unsigned index, Connection const &data);
         std::vector<Connection> const &getConnection() const;
         unsigned getConnectionCount() const;
@@ -65,7 +66,7 @@ namespace Neural {
         double _alpha; // [0.0..n] multiplier of last weight change (momentum)
         double _outputVal;
         std::vector<Connection> _outputWeights;
-        unsigned _myIndex;
+        unsigned _mIndex;
         double _gradient;
 
         double transferFunction(double x) const;

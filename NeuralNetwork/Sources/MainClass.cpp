@@ -9,9 +9,6 @@
 
 #include "MainClass.h"
 
-#include <DataFrame/DataFrame.h>
-// Define a DataFrame with unsigned long index type
-typedef hmdf::StdDataFrame<unsigned long> PandasDF;
 
 MainClass::MainClass(int argc, char *argv[]): AMain(argc, argv, "MainClass") {
 
@@ -35,22 +32,17 @@ bool MainClass::Run(ArgParser::parser_results const &args) {
         return false;
     }
 
-    PandasDF df;
-    df.read(args["dataset"].as<const char *>(), hmdf::io_format::csv);
+    //PandasDF df;
+    //df.read(args["dataset"].as<const char *>(), hmdf::io_format::csv);
 
-    std::cout << df.shape().first << " " << df.shape().second <<  std::endl;
-
-//    Neural::NetworkTrainer trainer(args["dataset"].as<std::string>());
-    Neural::Network network();
-
-//    network.train(trainer);
+    Neural::Network network;
+    network << Neural::Layer(2) << Neural::Layer(4) << Neural::Layer(1);
     std::cout << network;
-    //network.saveTo("./samples_save/or_gate.txt");
 
-    //Neural::Network network2(std::vector<unsigned> {});
-    //network2.loadFrom("./samples_save/or_gate.txt");
+    Neural::NetworkTrainer trainer(args["dataset"].as<std::string>());
+    network.train(trainer);
 
-    network.errorPlot();
+    //network.errorPlot();
 
     return true;
 }

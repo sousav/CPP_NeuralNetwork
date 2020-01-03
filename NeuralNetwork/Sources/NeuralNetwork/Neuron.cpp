@@ -9,15 +9,10 @@
 
 #include "Neuron.hpp"
 
-Neural::Neuron::Neuron(unsigned numOutputs, unsigned myIndex, double eta, double alpha) {
+Neural::Neuron::Neuron(unsigned myIndex, double eta, double alpha) {
     this->_eta = eta;
     this->_alpha = alpha;
-    for (unsigned c = 0; c < numOutputs; ++c) {
-        this->_outputWeights.push_back(Connection());
-        this->_outputWeights.back().weight = randomWeight();
-    }
-
-    this->_myIndex = myIndex;
+    this->_mIndex = myIndex;
 }
 
 Neural::Neuron::~Neuron() {
@@ -29,7 +24,7 @@ Neural::Neuron::Neuron(const Neural::Neuron &neuron) {
     this->_alpha = neuron._alpha;
     this->_outputVal = neuron._outputVal;
     this->_outputWeights = neuron._outputWeights;
-    this->_myIndex = neuron._myIndex;
+    this->_mIndex = neuron._mIndex;
     this->_gradient = neuron._gradient;
 }
 
@@ -38,37 +33,36 @@ Neural::Neuron &Neural::Neuron::operator =(const Neural::Neuron &neuron) {
     this->_alpha = neuron._alpha;
     this->_outputVal = neuron._outputVal;
     this->_outputWeights = neuron._outputWeights;
-    this->_myIndex = neuron._myIndex;
+    this->_mIndex = neuron._mIndex;
     this->_gradient = neuron._gradient;
     return *this;
+}
+
+void Neural::Neuron::setOutputSize(unsigned size) {
+    for (unsigned c = 0; c < size; ++c) {
+        this->_outputWeights.emplace_back();
+        this->_outputWeights.back().weight = randomWeight();
+    }
 }
 
 void Neural::Neuron::setOutputVal(double val) {
     this->_outputVal = val;
 }
 
-double Neural::Neuron::getOutputVal(void) const {
+double Neural::Neuron::getOutputVal() const {
     return this->_outputVal;
 }
 
 void Neural::Neuron::feedForward(const Layer &prevLayer) {
-    double sum = 0.0;
-
-    // Sum the previous layer's outputs (which are our inputs)
-    // Include the bias node from the previous layer.
-    for (unsigned n = 0; n < prevLayer.size(); ++n) {
-        sum += prevLayer[n].getOutputVal() *
-                prevLayer[n]._outputWeights[this->_myIndex].weight;
-    }
-    this->_outputVal = Neural::Neuron::transferFunction(sum);
+    this->_outputVal = Neural::Neuron::transferFunction(prevLayer.sumOutput(this->_mIndex));
 }
 
-void Neural::Neuron::calcOutputGradients(double targetVal) {
+void Neural::Neuron::computeOutputGradient(double targetVal) {
     double delta = targetVal - this->_outputVal;
     this->_gradient = delta * Neural::Neuron::transferFunctionDerivative(this->_outputVal);
 }
 
-void Neural::Neuron::calcHiddenGradients(const Layer &nextLayer) {
+void Neural::Neuron::computeHiddenGradient(const Layer &nextLayer) {
     double dow = sumDOW(nextLayer);
     this->_gradient = dow * Neural::Neuron::transferFunctionDerivative(this->_outputVal);
 }
@@ -76,9 +70,8 @@ void Neural::Neuron::calcHiddenGradients(const Layer &nextLayer) {
 void Neural::Neuron::updateInputWeights(Layer &prevLayer) {
     // The weights to be updated are in the Connection container
     // in the neurons in the preceding layer
-    for (unsigned n = 0; n < prevLayer.size(); ++n) {
-        Neuron &neuron = prevLayer[n];
-        double oldDeltaWeight = neuron._outputWeights[this->_myIndex].deltaWeight;
+    for (auto &neuron: prevLayer.neurons()) {
+        double oldDeltaWeight = neuron._outputWeights[this->_mIndex].deltaWeight;
 
         double newDeltaWeight =
                 // Individual input, magnified by the gradient and train rate:
@@ -89,8 +82,8 @@ void Neural::Neuron::updateInputWeights(Layer &prevLayer) {
                 + this->_alpha
                 * oldDeltaWeight;
 
-        neuron._outputWeights[this->_myIndex].deltaWeight = newDeltaWeight;
-        neuron._outputWeights[this->_myIndex].weight += newDeltaWeight;
+        neuron._outputWeights[this->_mIndex].deltaWeight = newDeltaWeight;
+        neuron._outputWeights[this->_mIndex].weight += newDeltaWeight;
     }
 }
 
@@ -125,8 +118,8 @@ double Neural::Neuron::sumDOW(const Neural::Layer &nextLayer) const {
     double sum = 0.0;
 
     // Sum our contributions of the errors at the nodes we feed.
-    for (unsigned n = 0; n < nextLayer.size() - 1; ++n) {
-        sum += this->_outputWeights[n].weight * nextLayer[n]._gradient;
+    for (unsigned n = 0; n < nextLayer.getNeurons().size() - 1; ++n) {
+        sum += this->_outputWeights[n].weight * nextLayer.getNeurons()[n]._gradient;
     }
     return sum;
 }
