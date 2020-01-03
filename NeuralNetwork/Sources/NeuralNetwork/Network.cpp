@@ -29,7 +29,7 @@ Neural::Network &Neural::Network::operator=(const Neural::Network &network) {
 Neural::Network &Neural::Network::operator<<(Layer layer) {
     if (!this->_layers.empty()) {
         for (auto &neuron: this->_layers.back().neurons()) {
-            neuron.setOutputSize(layer.getNeurons().size());
+            neuron.setOutputSize(layer.getNeurons().size() - 1);
         }
     }
     this->_layers.push_back(layer);
